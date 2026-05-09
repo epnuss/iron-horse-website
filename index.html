@@ -157,6 +157,21 @@
       pointer-events: none;
     }
 
+    .hero-bg-logo {
+      position: absolute;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 680px;
+      height: 680px;
+      object-fit: contain;
+      opacity: 0.045;
+      pointer-events: none;
+      filter: grayscale(30%);
+      will-change: transform;
+      z-index: 0;
+    }
+
     .hero-left { position: relative; z-index: 1; }
 
     .hero-badge {
@@ -780,6 +795,7 @@
 
   <!-- HERO -->
   <section class="hero">
+    <img src="./logo.jpg" alt="" class="hero-bg-logo" id="parallaxLogo" aria-hidden="true" />
     <div class="hero-left">
       <div class="hero-badge">⭐ Serving South Florida Since 2024</div>
       <h1>Your Roof.<br>Protected by<br><span>Iron Horse.</span></h1>
@@ -1343,6 +1359,23 @@
   </div>
 
   <script>
+    // Parallax logo
+    const parallaxLogo = document.getElementById('parallaxLogo');
+    if (parallaxLogo) {
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const scrollY = window.scrollY;
+            const offset = scrollY * 0.35;
+            parallaxLogo.style.transform = `translateY(calc(-50% + ${offset}px))`;
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+    }
+
     // Fade-up on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
